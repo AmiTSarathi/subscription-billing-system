@@ -1,14 +1,18 @@
-
 import { useEffect, useState } from 'react';
 
 export default function BillView() {
   const [bill, setBill] = useState(null);
 
-  useEffect(() => {
-    fetch('http://localhost:8000/bill/user123')
-      .then(res => res.json())
-      .then(setBill);
-  }, []);
+const backendUrl = window.location.hostname.includes("replit")
+  ? "https://" + window.location.hostname.replace("5173", "8000")
+  : "http://localhost:8000";
+
+useEffect(() => {
+  fetch(`${backendUrl}/bill/user123`)
+    .then(res => res.json())
+    .then(setBill);
+}, []);
+
 
   if (!bill) return <p>Loading bill...</p>;
 
